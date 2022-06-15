@@ -1,0 +1,109 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "uView-index"
+			}
+		},
+		{
+			"path": "pages/calssify/index",
+			"style": {
+
+				"navigationBarTitleText": "uView-center"
+			}
+		},
+		{
+			"path": "pages/cart/index",
+			"style": {
+				"navigationBarTitleText": "uView-center"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "uView-center"
+			}
+		},
+		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
+		{
+			"path": "pages/product/index",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			}
+		}
+
+		, {
+			"path": "pages/address/index",
+			"style": {
+				"navigationBarTitleText": "地址",
+				"enablePullDownRefresh": false
+			}
+
+		}
+	    ,{
+            "path" : "pages/pay/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "支付订单",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	},
+	"tabBar": {
+		"color": "#909399",
+		"selectedColor": "#303133",
+		"borderStyle": "black",
+		"backgroundColor": "#CCC",
+		"list": [{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/tab/home.png",
+				"selectedIconPath": "static/tab/shouye.png",
+				"text": "首页"
+			}, {
+				"pagePath": "pages/calssify/index",
+				"iconPath": "static/tab/classify.png",
+				"selectedIconPath": "static/tab/gengduo.png",
+				"text": "分类"
+			}, {
+				"pagePath": "pages/cart/index",
+				"iconPath": "static/tab/cart.png",
+				"selectedIconPath": "static/tab/gouwuche.png",
+				"text": "购物车"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "static/tab/user.png",
+				"selectedIconPath": "static/tab/wode.png",
+				"text": "我的"
+			}
+		]
+	}
+}
