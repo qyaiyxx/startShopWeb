@@ -30,21 +30,27 @@
 				<view>
 					<view class="orderdata">
 						<view class="orderdatabody">
-							<view class="orderdatabodylist1">
+							<view class="orderdatabodylist1" v-for="item in orderdetaildata">
 								<view>
 									<image class="orderdatabodyimg"
-										:src="'http://localhost:3000/imgs/'+orderdetaildata.product_image" mode="">
+										:src="'http://localhost:3000/imgs/'+item.product_image" mode="">
 									</image>
 								</view>
-								<view class="orderprice">
-									<view>{{orderdetaildata.product_name}}</view>
-									<view>￥{{orderdetaildata.product_price}}</view>
+								<view class="orderpricebody">
+									<view class="orderprice">
+										<view>{{item.product_name}}</view>
+										<view>￥{{item.product_price}}</view>
+									</view>
+									<view class="ordernum">
+										<view>*{{item.num}}</view>
+									</view>
 								</view>
+
 							</view>
 							<view class="orderdis">
 								<view class="leftlist">购买数量</view>
 								<view class="rightlist">
-									* {{orderdetaildata.num}}
+
 								</view>
 							</view>
 							<view class="orderdis">
@@ -57,18 +63,22 @@
 							</view>
 							<view class="orderdis">
 								<view class="leftlist">订单备注</view>
-								<view class="rightlist">
-									<u-input v-model="remarksinfo" height="20" placeholder-style="font-size: 12px;"
-										placeholder="选填,请和卖家协商一致" />
-								</view>
 							</view>
 							<view class="ordercount">
-								<view>共计{{orderdetaildata.num}}件</view>
+								<view>共计{{orderdata.order_num}}件</view>
 								<view class="minicount">小计<view style="color: red;">￥{{orderdata.pay_money}}</veiw>
 									</view>
 
 									</vewi>
 								</view>
+							</view>
+
+						</view>
+						<view class="userremarks">
+							<samp>备注信息：</samp>
+							<view class="rightlist">
+								<u-input v-model="remarksinfo" height="20" placeholder-style="font-size: 12px;"
+									placeholder="选填,请和卖家协商一致" />
 							</view>
 						</view>
 					</view>
@@ -81,7 +91,7 @@
 
 		<view class="gotopay">
 			<view class="gotopaybody">
-				<view style="font-size: 12px;color: #ccc;">共{{orderdetaildata.num}}件</view>
+				<view style="font-size: 12px;color: #ccc;">共{{orderdata.order_num}}件</view>
 				<view style="font-size: 13px;margin-left: 10px;">合计:<view style="color: red;">{{orderdata.pay_money}}
 					</view>
 				</view>
@@ -92,6 +102,7 @@
 				</view>
 			</view>
 		</view>
+
 		<u-toast ref="uToast" />
 	</view>
 
@@ -154,16 +165,20 @@
 				})
 			},
 			async submitpwd() {
-				if (this.value == 123456||this.value == "123456") {
-					this.value=""
+				if (this.value == 123456 || this.value == "123456") {
+					this.value = ""
 					this.$refs.uToast.show({
 						title: '支付成功',
 						type: 'success',
 					})
 					//this.store.state.user_id
-					const result=await this.http.post("/order/okpay",{orderid:this.orderid,userid:1,remarksinfo:this.remarksinfo})
-					
-					if(result.code!=="200"){
+					const result = await this.http.post("/order/okpay", {
+						orderid: this.orderid,
+						userid: 1,
+						remarksinfo: this.remarksinfo
+					})
+
+					if (result.code !== "200") {
 						return this.$refs.uToast.show({
 							title: '服务器错误，请联系客服',
 							type: 'info',
@@ -171,13 +186,13 @@
 					}
 					console.log(123)
 					uni.switchTab({
-						url:'pages/user/index'
+						url: 'pages/user/index'
 					})
 					// uni.navigateTo({
 					// 	url:'/pages/product/index?id='+9
 					// })
 				} else {
-					this.value=""
+					this.value = ""
 					this.$refs.uToast.show({
 						title: '密码错误',
 						type: 'warning',
@@ -272,10 +287,22 @@
 			justify-content: space-between;
 			align-items: center;
 
-			.orderprice {
-				display: flex;
-				width: 80%;
-				justify-content: space-between;
+			.orderpricebody {
+				width: 90%;
+
+				.ordernum {
+					margin: 3vw 0 0 3vw;
+					display: flex;
+					justify-content: flex-end;
+					width: 91%;
+				}
+
+				.orderprice {
+					display: flex;
+					width: 93%;
+					justify-content: space-between;
+					margin: auto;
+				}
 			}
 
 			.orderdatabodyimg {
@@ -316,5 +343,26 @@
 		display: flex;
 		justify-content: space-between;
 		width: 50%;
+	}
+
+	.userremarks {
+		border-radius: 10px;
+		background-color: #fff;
+		width: 94%;
+		margin: auto;
+		height: 70px;
+		display: flex;
+		margin-top: 20px;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-evenly;
+		view {
+			width: 95%;
+		}
+
+		samp {
+			width: 95%;
+			font-size: 14px;
+		}
 	}
 </style>

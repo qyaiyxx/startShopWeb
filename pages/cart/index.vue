@@ -101,7 +101,6 @@
 				this.userid = this.store.state.user_id;
 				this.loadcartlist()
 			}
-			console.log(this.cartlist)
 		},
 		onHide(){
 			this.cartid=[]
@@ -114,6 +113,18 @@
 					}
 				})
 				const result=await this.http.post('/order/cartorder',{cartid:this.cartid,userid:this.userid})
+				if (result.code == '200') {
+					uni.navigateTo({
+						url: '/pages/pay/index?orderid=' + result.date
+					})
+				} else {
+					this.$refs.uTips.show({
+						title: result.msg,
+						type: 'info ',
+						duration: '2300'
+					})
+				}
+					
 			},
 			async updatenum(val) {
 				console.log(this.userid)

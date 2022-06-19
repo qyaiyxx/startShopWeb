@@ -1,6 +1,6 @@
 <template>
 	<view class="orderlistbody">
-		<view class="orderlist" v-for="item in orderlist" :key="item.id">
+		<view class="orderlist" v-for="(item,index) in orderlist" :key="index">
 			
 			<view class="ordertype">
 				<view>订单号{{item.order_id}}</view>
@@ -33,7 +33,7 @@
 			</view>
 			<view class="orderinputbody">
 				<view class="orderinput">
-					<u-tag text="卖了" shape="circle" type="warning" mode="plain"/>
+					<u-tag text="删除订单" shape="circle" type="warning" mode="plain"/>
 					<u-tag text="查看物流" shape="circle" type="warning" mode="plain"/>
 					<u-tag text="评价" shape="circle" type="warning" mode="plain"/>
 				</view>
