@@ -24,7 +24,7 @@
 						name: '全部'
 					},
 					{
-						name: '已付款'
+						name: '未付款'
 					}, {
 						name: '待发货',
 						count: 4
@@ -48,9 +48,15 @@
 		},
 		methods: {
 			// tabs通知swiper切换
-			tabsChange(index) {
+			async tabsChange(index) {
 				this.current = index
 				this.swiperCurrent = index;
+				this.indexpage=0;
+				const result=await this.http.post("/order/allorder",{userid:1,indexpgage:this.indexpage,ordertype:this.current})
+				this.list[this.current].count=result.total.taotal
+				console.log(result)
+				this.orderslist=[]
+				this.orderslist.push(...result.data);
 			},
 			// swiper-item左右移动，通知tabs的滑块跟随移动
 			transition(e) {
@@ -58,10 +64,14 @@
 			},
 			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
 			// swiper滑动结束，分别设置tabs和swiper的状态
-			animationfinish(e) {
+			async animationfinish(e) {
 				let current = e.detail.current;
 				this.swiperCurrent = current;
 				this.current = current;
+				this.indexpage=0;
+				const result=await this.http.post("/order/allorder",{userid:1,indexpgage:this.indexpage,ordertype:this.current})
+				this.orderslist=[]
+				this.orderslist.push(...result.data);
 			},
 			// scroll-view到底部加载更多
 			onreachBottom() {
@@ -69,7 +79,7 @@
 				this.getOrderslist()
 			},
 			async getOrderslist(){
-				const result=await this.http.post("/order/allorder",{userid:1,indexpgage:this.indexpage})
+				const result=await this.http.post("/order/allorder",{userid:1,indexpgage:this.indexpage,ordertype:this.current})
 				this.orderslist.push(...result.data);
 				console.log(this.orderslist)
 			}

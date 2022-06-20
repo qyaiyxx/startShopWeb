@@ -4,10 +4,11 @@
 			
 			<view class="ordertype">
 				<view>订单号{{item.order_id}}</view>
-				<view class="texttype" v-if="item.pay_type===1">
+				<view class="texttype" v-if="item.order_state==1">
+					
 					交易失败
 				</view>
-				<view v-else-if="item.pay_type===2">
+				<view v-else-if="item.order_state==2">
 					交易成功
 				</view>
 			</view>
@@ -29,7 +30,7 @@
 
 			</view>
 			<view style="width: 98%; text-align: right;">
-				共计{{item.order_num||999}}件商品 合计￥{{item.pay_money}}
+				共计{{item.order_num||9}}件商品 合计￥{{item.pay_money}}
 			</view>
 			<view class="orderinputbody">
 				<view class="orderinput">

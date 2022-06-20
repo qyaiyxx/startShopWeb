@@ -27,10 +27,6 @@
 </template>
 
 <script>
-	import {
-		setlocastroe,
-		getlocastroe
-	} from '@/uitls/locastore.js'
 	export default {
 		data() {
 			return {
