@@ -1,14 +1,20 @@
 <template>
 	<view style="background: #f3f4f4;height: 100vh;width: 100%;">
 		<view class="nobackcolor">
-			<view class="myportrait" v-if="this.user.user_id==null&&this.user.user_id==undefined" @click="login()">
+			<view class="myuserinfo" v-if="this.islogin=='no'" @click="login()">
 				<image class="userimg" mode="widthFix" src="../../static/imgs/13456.jpg"></image>
 				<view>点击登录</view>
-
 			</view>
 			<view v-else>
 				<view class="myuserinfo">
-					<image class="userimg" mode="widthFix" src="../../static/imgs/13456.jpg"></image>
+					<image class="userimg" mode="widthFix"
+						:src="this.user.headimg==undefined?'../../static/imgs/13456.jpg':'http://localhost:3000/imgs/'+this.user.headimg">
+					</image>
+					<view class="uptataltext">点击修改</view>
+					<u-upload class="userupload" :action="action" 
+						:form-data="upFileData" @on-success='uploadsuccess'
+						:auto-upload="true" :show-upload-list='false' :file-list="fileList">
+					</u-upload>
 					<view class="usernames">
 						<view class="proname">{{user.user_name}}</view>
 						<view class="info">忙碌星人。。。</view>
@@ -85,12 +91,24 @@
 	export default {
 		data() {
 			return {
-				user: {}
+				user: {},
+				action: 'http://localhost:3000/users/uploaduserhandeimg',
+				fileList: [],
+				islogin: '',
+				upFileData:{
+					id:123456,
+					name:'kadjfakl'
+				}
 			}
 
 		},
+		onLoad() {
+			this.getuser();
+			this.islogin = isuserlogin.islogin();
+
+		},
 		onShow() {
-			this.getuser()
+			this.islogin = isuserlogin.islogin();
 		},
 		methods: {
 			login() {
@@ -117,6 +135,12 @@
 				uni.navigateTo({
 					url: '../order/index'
 				})
+			},
+			uploadsuccess(result) {
+				if (result.code == '200') {
+					console.log(result)
+					this.user.headimg = result.result
+				}
 			}
 		}
 	}
@@ -126,6 +150,7 @@
 	.nobackcolor {
 		background-color: #f4f5f7;
 		margin-bottom: 40px;
+
 		.myuserinfo {
 			height: 13vh;
 			display: flex;
@@ -133,13 +158,16 @@
 			width: 94%;
 			margin: auto;
 			padding-top: 20px;
-			.usernames{
+
+			.usernames {
 				display: flex;
 				flex-direction: column;
-				.proname{
+
+				.proname {
 					font-size: 18px;
 				}
-				.info{
+
+				.info {
 					color: #CCC;
 					font-size: 14px;
 				}
@@ -147,7 +175,7 @@
 		}
 	}
 
-	
+
 
 	.mymy {
 		height: 30vh;
@@ -178,7 +206,7 @@
 
 	.userimg {
 		width: 60px;
-		height: 60px;
+		height: 60px !important;
 		margin-right: 6px;
 		border-radius: 50%;
 	}
@@ -204,6 +232,7 @@
 				18.5px 2px 17.9px rgba(0, 0, 0, 0.107),
 				83px 9px 80px rgba(0, 0, 0, 0.18)
 		}
+
 		// .parlist:{
 		// 	transform:scale(0.9,0.9);
 		// 	transition:all .3s ;
@@ -225,5 +254,21 @@
 
 	.padleft {
 		padding-left: 10px;
+	}
+
+	.userupload {
+		width: 60px;
+		height: 60px;
+		overflow: hidden;
+		position: absolute;
+		opacity: 0;
+	}
+
+	.uptataltext {
+		color: #ccc;
+		position: absolute;
+		font-size: 12px;
+		opacity: .3;
+		top: 13vh;
 	}
 </style>

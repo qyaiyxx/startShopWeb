@@ -18,12 +18,25 @@
 		</view>
 		<!-- //轮播图---------- -->
 
+
+
 		<!-- //公告 -->
 		<view>
-			<u-notice-bar class="homenotice" font-size="20px" padding="5px" mode="horizontal" :list="homeinfo.noticedata">
+			<u-notice-bar class="homenotice" font-size="20px" padding="5px" mode="horizontal"
+				:list="homeinfo.noticedata">
 			</u-notice-bar>
 		</view>
 		<!-- //公告--------- -->
+
+		<!-- icon处图标 -->
+		<NewsIcon></NewsIcon>
+		<!-- ///icon处图标 -->
+
+		<view class="absbannai">
+			<image class="abscontent"
+				src="https://img12.360buyimg.com/img/s750x205_jfs/t1/45411/24/19049/30208/62ab3f47Eccf5074e/b2a4da2dd28dcdcd.png.webp"
+				mode="scaleToFill"></image>
+		</view>
 
 		<!-- //商品块 -->
 		<view>
@@ -36,6 +49,7 @@
 
 <script>
 	import ShopBlock from "../../components/ShopBlock.vue"
+	import NewsIcon from "../../components/newsicon.vue"
 	export default {
 
 		data() {
@@ -57,9 +71,11 @@
 				const {
 					data
 				} = await this.http.post('/index/getshoposinfo')
-				this.homeinfo.list=data.home_swiper.split(',')
-				this.homeinfo.list=this.homeinfo.list.map(item=>{
-					return {image:'http://localhost:3000/imgs/'+item}
+				this.homeinfo.list = data.home_swiper.split(',')
+				this.homeinfo.list = this.homeinfo.list.map(item => {
+					return {
+						image: 'http://localhost:3000/imgs/' + item
+					}
 				})
 				console.log(data.list)
 				this.homeinfo.noticedata.push(data.home_welcome)
@@ -73,12 +89,23 @@
 			}
 		},
 		components: {
-			ShopBlock
+			ShopBlock,
+			NewsIcon
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
+	.absbannai {
+		display: flex;
+		justify-content: center;
+		height: 120px;
+
+		.abscontent {
+			height: 100%;
+		}
+	}
+
 	.homesearch {
 		background: #f4f4f5;
 		margin: 5px 0 10px 0;
